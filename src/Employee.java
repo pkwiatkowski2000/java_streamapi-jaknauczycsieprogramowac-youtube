@@ -1,12 +1,13 @@
-import lombok.*;
-import org.junit.jupiter.api.Tag;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@ToString
 
 public class Employee {
 
@@ -15,4 +16,14 @@ public class Employee {
     int age;
 
     private List<String> skills;
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", skills=" + skills +
+                '}';
+    }
 }
