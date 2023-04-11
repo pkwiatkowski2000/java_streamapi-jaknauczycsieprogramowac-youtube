@@ -190,6 +190,55 @@ public class StreamsExample {
         System.out.println(allNames);
 
     }
+
+    @Test
+
+    // metoda takeWhile używa się zawsze na posortowanych streamach
+
+    public void takeWhileOperation() {
+        employees.stream()
+                .sorted(Comparator.comparing(Employee::getAge))
+                .takeWhile(employee -> employee.getAge() < 30)
+                .forEach(System.out::println);
+    }
+
+    @Test
+
+    // metoda dropWhile używa się zawsze na posortowanych streamach
+
+    public void dropWhileOperation() {
+        employees.stream()
+                .sorted(Comparator.comparing(Employee::getAge))
+                .dropWhile(employee -> employee.getAge() < 30)
+                .forEach(System.out::println);
+
+    }
+
+    @Test
+    public void forEachOrdered() {
+        String sentence = "Jak nauczyć się programowania?";
+
+        sentence.chars().forEach(s -> System.out.print((char) s));
+        System.out.println();
+        sentence.chars().parallel().forEach(s -> System.out.print((char) s));
+        System.out.println();
+        sentence.chars().parallel().forEachOrdered(s -> System.out.print((char) s));
+    }
+
+    @Test
+
+    // metoda peek używa się tylko do podglądania elementów streama podczas debugowania kodu
+
+
+    public void peekOperation() {
+        List<Employee> newEmployees = employees.stream()
+                .peek(employee -> employee.setFirstName("Kamil"))
+                .collect(Collectors.toList());
+
+        System.out.println(newEmployees);
+        System.out.println();
+        System.out.println(employees);
+    }
 }
 
 
