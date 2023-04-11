@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,6 +60,135 @@ public class StreamsExample {
                 .collect(Collectors.toList());
 
         System.out.println(allSkills2);
+    }
+
+    @Test
+    public void filterOperation() {
+        employees.stream()
+                .filter(employee -> employee.getFirstName().startsWith("B"))
+                .forEach(System.out::println);
+    }
+
+    @Test
+    public void sortedOpreation() {
+        employees.stream()
+                .sorted(Comparator.comparing(Employee::getLastName))
+                .forEach(System.out::println);
+
+    }
+
+    @Test
+    public void limitOperation() {
+        employees.stream()
+                .sorted(Comparator.comparing(Employee::getLastName))
+                .limit(2)
+                .forEach(System.out::println);
+    }
+
+    @Test
+    public void skipOperation() {
+        employees.stream()
+                .sorted(Comparator.comparing(Employee::getLastName))
+                .skip(2)
+                .forEach(System.out::println);
+    }
+
+    @Test
+    public void countCoperation() {
+        long numberOfEmployees = employees.stream()
+                .filter(employee -> employee.getFirstName().startsWith("B"))
+                .count();
+
+        System.out.println(numberOfEmployees);
+    }
+
+    @Test
+    public void minOperation() {
+        Employee youngestEmployee = employees.stream()
+                .min(Comparator.comparing(Employee::getAge)).get();
+
+        System.out.println(youngestEmployee);
+    }
+
+    @Test
+    public void maxOperation() {
+        Employee oldestEmployee = employees.stream()
+                .max(Comparator.comparing(Employee::getAge)).get();
+
+        System.out.println(oldestEmployee);
+    }
+
+    @Test
+    public void findFirstOperation() {
+        Employee employee = employees.stream()
+                .filter(emp -> emp.getFirstName().startsWith("B"))
+                .findFirst().get();
+
+        System.out.println(employee);
+    }
+
+    @Test
+    public void findAnyOperation() {
+        Employee employee = employees.stream()
+                .filter(emp -> emp.getFirstName().startsWith("B"))
+                .findAny().get();
+
+        System.out.println(employee);
+    }
+
+    @Test
+    public void allMatchOperation() {
+        boolean b = employees.stream()
+                .allMatch(emp -> emp.getFirstName().startsWith("B"));
+
+        System.out.println(b);
+    }
+
+    @Test
+    public void anyMatchOperation() {
+        boolean a = employees.stream()
+                .anyMatch(emp -> emp.getFirstName().contains("a"));
+
+        System.out.println(a);
+    }
+
+    @Test
+    public void noneMatchOperation() {
+        boolean z = employees.stream()
+                .noneMatch(emp -> emp.getFirstName().startsWith("Z"));
+
+        System.out.println(z);
+
+
+    }
+
+    @Test
+    public void reduceOperation() {
+        Integer sumOfAllAges = employees.stream()
+                .map(Employee::getAge)
+                .reduce(Integer::sum)
+                .get();
+
+        System.out.println(sumOfAllAges);
+
+        int sumOfAllAges2 = employees.stream()
+                .map(Employee::getAge)
+                .reduce(0, Integer::sum);
+
+        System.out.println(sumOfAllAges2);
+
+        Integer sumOfAllAges3 = employees.stream()
+                .reduce(0, (age, employee) -> age + employee.getAge(), Integer::sum);
+
+        System.out.println(sumOfAllAges3);
+
+        String allNames = employees.stream()
+                .map(Employee::getFirstName)
+                .reduce((name, name2) -> name + ", " + name2)
+                .get();
+
+        System.out.println(allNames);
+
     }
 }
 
